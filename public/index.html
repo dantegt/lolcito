@@ -7,7 +7,22 @@
     <title>API League of Legends</title>
 </head>
 <body>
-    <h1>Documentación</h1>
-    <a href="/condiciones-entrega-api.pdf" target="_blank">Condiciones de entrega</a>
+    <h1 dir="auto"><a id="user-content-api-expressjs" class="anchor" aria-hidden="true" href="#api-expressjs"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>API Express.js</h1>
+    <p dir="auto">API en Express.js que consume el API de RIOT Games para consultar sobre nombres de invocador (/summoner) o información de campeones (/champion).</p>
+    <p dir="auto"><a href="/dantegt/lolcito/blob/master/condiciones-entrega-api.pdf">Condiciones de Entrega</a></p>
+    <p dir="auto"><a href="https://tup-lolcito.herokuapp.com/" rel="nofollow">Heroku</a></p>
+    <h2 dir="auto"><a id="user-content-para-empezar" class="anchor" aria-hidden="true" href="#para-empezar"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Para empezar</h2>
+    <p dir="auto">Los endpoints <code>/champion</code> son libres y se puede consultar sin registro.<br>
+    Para el endpoint <code>/summoner</code> hay que obtener un API_KEY de 24hs de duracion en <a href="https://developer.riotgames.com/" rel="nofollow">Riot Developer Portal</a> y configurarlo en el archivo .env</p>
+    <h3 dir="auto"><a id="user-content-obtener-un-api-key" class="anchor" aria-hidden="true" href="#obtener-un-api-key"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Obtener un API key</h3>
+    <p dir="auto">Es muy fácil.</p>
+    <ul dir="auto">
+    <li>Registrarse en <a href="https://developer.riotgames.com/" rel="nofollow">Riot Developer Portal</a></li>
+    <li>Aceptar los terminos de servicio</li>
+    <li>Copiar el Development API key</li>
+    <li>Pegarla dentro de un archivo .env</li>
+    </ul>
+    <h3 dir="auto"><a id="user-content-documentacion" class="anchor" aria-hidden="true" href="#documentacion"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Documentacion</h3>
+    <p dir="auto"><a href="https://documenter.getpostman.com/view/23525710/2s83S87WAK" rel="nofollow">API Postman docs</a></p>
 </body>
 </html>
