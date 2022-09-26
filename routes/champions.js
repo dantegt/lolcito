@@ -1,12 +1,10 @@
 const { Router } = require("express");
 const {
     getDocs,
-    getAPI,
     getChampions,
     getChampion,
     findChampion,
     getSummoner,
-    getCondiciones,
 } = require("../controllers/champions");
 
 const router = new Router()
@@ -18,8 +16,6 @@ const router = new Router()
 // EXTRA: Uso de un API con API key
 
 router.get('/', getDocs)
-router.get('/api', getAPI)
-router.get('/entrega', getCondiciones)
 router.get('/champion/find', findChampion)
 router.get('/champion/:id', getChampion)
 router.get('/champion', getChampions)

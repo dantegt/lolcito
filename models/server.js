@@ -19,7 +19,9 @@ class Server {
     }
 
     router() {
+        this.app.get('/api', (req, res) => res.redirect(301, 'https://documenter.getpostman.com/view/23525710/2s83S87WAK'))
         this.app.use('/api/v1', require('../routes/champions'))
+        this.app.get('/entrega', (req, res) => res.redirect(301, '/condiciones-entrega-api.pdf'))
 
         this.app.all('*', (req, res) => {
             res.send('Página no encontrada')

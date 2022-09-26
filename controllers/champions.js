@@ -5,14 +5,6 @@ const getDocs = (req, res) => {
     res.send('Documentacion de API')
 }
 
-const getCondiciones = (req, res) => {
-    res.sendFile('/condiciones-entrega-api.pdf')
-}
-
-const getAPI = (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/23525710/2s83S87WAK');
-}
-
 const getChampions = (req, res) => {
     // Listado de Campeones
     axios.get(`http://ddragon.leagueoflegends.com/cdn/12.17.1/data/es_AR/champion.json`)
@@ -83,10 +75,8 @@ const getSummoner = (req, res) => {
     
 module.exports = {
     getDocs,
-    getAPI,
     getChampions,
     getChampion,
     findChampion,
     getSummoner,
-    getCondiciones,
 }
