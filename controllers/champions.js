@@ -12,7 +12,7 @@ const getChampions = (req, res) => {
         res.status(200).json(resp.data)
     })
     .catch((err) => {
-        res.send(`Error: ${err}`)
+        res.status(400).json(error(400, `Bad Request ${err}`))
     })
 }
 
@@ -29,13 +29,13 @@ const getChampion = (req, res) => {
         res.status(200).json(champs)
     })
     .catch((err) => {
-        res.send(`Error: ${err}`)
+        res.status(400).json(error(400, `Bad Request ${err}`))
     })
 }
 
 const findChampion = (req, res) => {
     // Encontrar un Campeon
-    let {id, name, type} = req.query
+    let {id, name, type, ...others} = req.query
     id = req.sanitize(id)
     name = req.sanitize(name)
     type = req.sanitize(type)
@@ -51,11 +51,14 @@ const findChampion = (req, res) => {
             champs = champs.filter((champ) => champ.id.toLowerCase().includes(name.toLowerCase()))
         if(type)
             champs = champs.filter((champ) => champ.tags.join().toLowerCase().includes(type.toLowerCase()))
-
-        res.status(200).json(champs)
+        if(id || name || type) {
+            res.status(200).json(champs)
+        } else {
+            res.status(400).json(error(400, `Bad Request - ${Object.keys(others)} not found`))
+        }      
     })
     .catch((err) => {
-        res.send(`Error: ${err}`)
+        res.status(400).json(error(400, `Bad Request ${err}`))
     })
 }
 
@@ -69,9 +72,14 @@ const getSummoner = (req, res) => {
         res.status(200).json({ summoner: resp.data })
     })
     .catch((err) => {
-        res.send(`Error: ${err}`)
+        res.status(400).json(error(400, `Bad Request ${err}`))
     })
 }
+
+const error = (status, error) => ({
+    status: status,
+    error: error,
+})
     
 module.exports = {
     getDocs,
