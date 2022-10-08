@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const expressSanitizer = require('express-sanitizer');
+const { error } = require('../controllers/champions')
+const expressSanitizer = require('express-sanitizer')
 
 class Server {
     constructor() {
@@ -24,7 +25,7 @@ class Server {
         this.app.use('/api/v1', require('../routes/champions'))
 
         this.app.all('*', (req, res) => {
-            res.send('Página no encontrada')
+            res.status(404).json(error(404, `Page not found`))
         })
     }
 
