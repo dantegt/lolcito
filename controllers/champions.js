@@ -1,5 +1,7 @@
 const axios = require('axios').default
-const api = process.env.API_KEY
+let api = process.env.API_KEY
+const secret = process.env.SECRET
+const version = process.env.VERSION || '13.24.1'
 
 const getDocs = (req, res) => {
     res.send('Documentacion de API')
@@ -7,7 +9,7 @@ const getDocs = (req, res) => {
 
 const getChampions = (req, res) => {
     // Listado de Campeones
-    axios.get(`http://ddragon.leagueoflegends.com/cdn/12.17.1/data/es_AR/champion.json`)
+    axios.get(`http://ddragon.leagueoflegends.com/cdn/${version}/data/es_AR/champion.json`)
     .then((resp) => {
         res.status(200).json(resp.data)
     })
@@ -21,12 +23,14 @@ const getChampion = (req, res) => {
     const {id} = req.params
     const sId = req.sanitize(id)
  
-    axios.get(`http://ddragon.leagueoflegends.com/cdn/12.17.1/data/es_AR/champion.json`)
+    axios.get(`http://ddragon.leagueoflegends.com/cdn/${version}/data/es_AR/champion.json`)
     .then((resp) => {
         const champs = Object.entries(resp.data.data)
             .map(([name, champ]) => champ)
             .filter((champ) => champ.key == sId)
-        res.status(200).json(champs)
+
+        if(!champs.length) res.status(404).json(error(404, `Champion not found`))
+        res.status(200).json(champs[0])
     })
     .catch((err) => {
         res.status(400).json(error(400, `Bad Request ${err}`))
@@ -40,7 +44,7 @@ const findChampion = (req, res) => {
     name = req.sanitize(name)
     type = req.sanitize(type)
   
-    axios.get(`http://ddragon.leagueoflegends.com/cdn/12.17.1/data/es_AR/champion.json`)
+    axios.get(`http://ddragon.leagueoflegends.com/cdn/${version}/data/es_AR/champion.json`)
     .then((resp) => {
         let champs = Object.entries(resp.data.data)
             .map(([name, champ]) => champ)
@@ -48,7 +52,7 @@ const findChampion = (req, res) => {
         if(id)
             champs = champs.filter((champ) => champ.key == id)
         if(name)
-            champs = champs.filter((champ) => champ.id.toLowerCase().includes(name.toLowerCase()))
+            champs = champs.filter((champ) => (champ.id.toLowerCase()).includes(name.toLowerCase()))
         if(type)
             champs = champs.filter((champ) => champ.tags.join().toLowerCase().includes(type.toLowerCase()))
         if(id || name || type) {
@@ -64,16 +68,28 @@ const findChampion = (req, res) => {
 
 const getSummoner = (req, res) => {
     const {id} = req.params
-    const {api_key} = req.query
-    const key = req.sanitize(api_key) || api
 
-    axios.get(`https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/${id}?api_key=${key}`)
+    axios.get(`https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/${id}?api_key=${api}`)
     .then((resp) => {
         res.status(200).json({ summoner: resp.data })
     })
     .catch((err) => {
         res.status(400).json(error(400, `Bad Request ${err}`))
     })
+}
+
+const setApiKey = (req, res) => {
+    const {api_key} = req.params
+    const {password} = req.query
+    const key = req.sanitize(api_key)
+    const pass = req.sanitize(password)
+
+    if(key && pass && pass === secret) {
+        api = key
+        res.status(200).json({ api_key: key })
+    } else {
+        res.status(400).json(error(400, `Bad Request`))
+    }
 }
 
 const error = (status, error) => ({
@@ -87,5 +103,6 @@ module.exports = {
     getChampion,
     findChampion,
     getSummoner,
+    setApiKey,
     error,
 }
