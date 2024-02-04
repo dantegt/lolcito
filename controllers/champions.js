@@ -67,9 +67,9 @@ const findChampion = (req, res) => {
 }
 
 const getSummoner = (req, res) => {
-    const {id} = req.params
+    const {id, server} = req.params
 
-    axios.get(`https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/${id}?api_key=${api}`)
+    axios.get(`https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${id}?api_key=${api}`)
     .then((resp) => {
         res.status(200).json({ summoner: resp.data })
     })

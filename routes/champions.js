@@ -134,11 +134,18 @@
  *               $ref: '#/components/schemas/Champion'
  *       500:
  *         description: Some server error
- * /summoner/{id}:
+ * /summoner/{server}/{id}:
  *   get:
  *     summary: Encontrar datos de un Summoner (require un api_key actualizado)
  *     tags: [Summoner]
  *     parameters:
+ *       - in: path
+ *         name: server
+ *         schema:
+ *           type: string
+ *           enum: [br1,eun1,euw1,jp1,kr,la1,la2,na1,oc1,ph2,ru,sg2,th2,tr1,tw2,vn2]
+ *         required: true
+ *         description: El server de Riot
  *       - in: path
  *         name: id
  *         schema:
@@ -200,7 +207,7 @@ router.get('/', getDocs)
 router.get('/champion/find', findChampion)
 router.get('/champion/:id', getChampion)
 router.get('/champion', getChampions)
-router.get('/summoner/:id', getSummoner)
+router.get('/summoner/:server/:id', getSummoner)
 router.put('/api_key/:api_key', setApiKey)
 
 module.exports = router
