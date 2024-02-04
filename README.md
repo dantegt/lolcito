@@ -2,9 +2,10 @@
 
 API en Express.js que consume el API de RIOT Games para consultar sobre nombres de invocador (/summoner) o información de campeones (/champion).
 
-[Condiciones de Entrega](condiciones-entrega-api.pdf)
-
-[Heroku - tup-lolcito](https://lolcito-express.onrender.com/)
+- [Condiciones de Entrega](condiciones-entrega-api.pdf)
+- [Render - Hosting](https://lolcito-express.onrender.com/)
+- [Documentacion Swagger](/swagger)
+- [API Postman docs](https://documenter.getpostman.com/view/23525710/2s83S87WAK)
 
 ## Para empezar
 
