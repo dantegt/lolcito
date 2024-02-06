@@ -161,6 +161,33 @@
  *               $ref: '#/components/schemas/Summoner'
  *       404:
  *         description: The summoner was not found
+ * /masteries/{server}/{puuid}:
+ *   get:
+ *     summary: Cargar masteries de un Summoner (require un api_key actualizado)
+ *     tags: [Masteries]
+ *     parameters:
+ *       - in: path
+ *         name: server
+ *         schema:
+ *           type: string
+ *           enum: [br1,eun1,euw1,jp1,kr,la1,la2,na1,oc1,ph2,ru,sg2,th2,tr1,tw2,vn2]
+ *         required: true
+ *         description: El server de Riot
+ *       - in: path
+ *         name: puuid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: El PUUID del Summoner (id privado de Riot para cada invocador)
+ *     responses:
+ *       200:
+ *         description: Masteries encontradas
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Mastery'
+ *       404:
+ *         description: The summoner was not found
  * /api_key/{api_key}:
  *   put:
  *     summary: Actualizar api_key
@@ -192,6 +219,7 @@ const {
     getChampion,
     findChampion,
     getSummoner,
+    getMasteries,
     setApiKey,
 } = require("../controllers/champions");
 
@@ -208,6 +236,7 @@ router.get('/champion/find', findChampion)
 router.get('/champion/:id', getChampion)
 router.get('/champion', getChampions)
 router.get('/summoner/:server/:id', getSummoner)
+router.get('/masteries/:server/:puuid', getMasteries)
 router.put('/api_key/:api_key', setApiKey)
 
 module.exports = router

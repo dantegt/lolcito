@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const { error } = require('../controllers/champions')
+const { error, setChampionsCache } = require('../controllers/champions')
 const expressSanitizer = require('express-sanitizer')
 const swaggerUi = require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
@@ -37,6 +37,7 @@ class Server {
         this.app = express()
         this.middleware()
         this.router()
+        setChampionsCache()
         this.port = process.env.PORT || 8080
         this.api = process.env.API_KEY
     }
