@@ -127,15 +127,29 @@ const getChampionIcon = async (req, res) => {
     }
 }
 
-const getSummoner = (req, res) => {
+const getSummoner = async (req, res) => {
     const {server, id} = req.params
+    let summoner
+    let encriptedId
 
-    axios.get(`https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${id}?api_key=${api}`)
+    // Get summoner
+    await axios.get(`https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${id}?api_key=${api}`)
     .then((resp) => {
-        res.status(200).json(resp.data)
+        summoner = resp.data
+        encriptedId = summoner.id
     })
     .catch((err) => {
-        res.status(400).json(error(400, `Bad Request ${err}`))
+        res.status(400).json(error(400, `Error getting Summoner data: ${err}`))
+    })
+
+    // Get Ranked data
+    await axios.get(`https://${server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${encriptedId}?api_key=${api}`)
+    .then((resp) => {
+        summoner['rank'] = resp.data.length ? resp.data[0] : []
+        res.status(200).json(summoner)
+    })
+    .catch((err) => {
+        res.status(400).json(error(400, `Error getting Summoner ranked data: ${err}`))
     })
 }
 
