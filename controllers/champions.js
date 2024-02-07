@@ -124,16 +124,36 @@ const getMasteries = (req, res) => {
 
     axios.get(`https://${server}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${puuid}?api_key=${api}`)
     .then((resp) => {
-        const masteries = champions.map((champion) => ({
-            ...champion,
-            mastery: resp.data.find((m) => m.championId.toString() === champion.key)
-        }))
+        const masteries = champions.map((champion) => {
+            const {chestGranted, ...mastery} =
+                resp.data.find((m) => m.championId.toString() === champion.key) ||
+                fallbackMastery(puuid, parseInt(champion.key))
+
+            return ({
+                ...champion,
+                chestGranted,
+                mastery,               
+            })
+        })
         res.status(200).json(masteries)
     })
     .catch((err) => {
         res.status(400).json(error(400, `Bad Request ${err}`))
     })
 }
+
+const fallbackMastery = (puuid = "puuid", championId = 0) => ({
+    "puuid": puuid,
+    "championId": championId,
+    "championLevel": 0,
+    "championPoints": 0,
+    "lastPlayTime": 0,
+    "championPointsSinceLastLevel": 0,
+    "championPointsUntilNextLevel": 0,
+    "chestGranted": false,
+    "tokensEarned": 0,
+    "summonerId": "summonerId"
+    })
 
 const setApiKey = (req, res) => {
     const {api_key} = req.params
