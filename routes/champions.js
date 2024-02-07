@@ -101,7 +101,27 @@
  *             schema:
  *               $ref: '#/components/schemas/Champion'
  *       404:
- *         description: The book was not found
+ *         description: The champion was not found
+ * /champion/icon/{id}:
+ *   get:
+ *     summary: Encontrar el icono de campeón por su id (número)
+ *     tags: [Champion]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Champion id
+ *     responses:
+ *       200:
+ *         description: The champion response by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Champion'
+ *       404:
+ *         description: The champion icon was not found
  * /champion/find:
  *   get:
  *     summary: Buscar un campeón por id (numero), name o type
@@ -217,6 +237,7 @@ const {
     getDocs,
     getChampions,
     getChampion,
+    getChampionIcon,
     findChampion,
     getSummoner,
     getMasteries,
@@ -234,6 +255,7 @@ const router = new Router()
 router.get('/', getDocs)
 router.get('/champion/find', findChampion)
 router.get('/champion/:id', getChampion)
+router.get('/champion/icon/:id', getChampionIcon)
 router.get('/champion', getChampions)
 router.get('/summoner/:server/:id', getSummoner)
 router.get('/masteries/:server/:puuid', getMasteries)

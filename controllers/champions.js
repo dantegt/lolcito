@@ -104,6 +104,29 @@ const findChampion = (req, res) => {
     })
 }
 
+const getChampionIcon = async (req, res) => {
+    // Obtener el icono de Campeon por id
+    const latestVersion = apiCache.get('latestVersion') || version
+    const {id} = req.params
+    const sId = req.sanitize(id)
+
+    try {
+        const { id } = req.params;
+        const url = `https://cdn.communitydragon.org/${latestVersion}/champion/${sId}/square`;
+
+        const response = await axios({
+            method: 'GET',
+            url: url,
+            responseType: 'stream'
+        });
+
+        res.setHeader('Content-Type', 'image/png');
+        response.data.pipe(res);
+    } catch (err) {
+        res.status(500).send({ error: 'An error occurred while retrieving the image.' });
+    }
+}
+
 const getSummoner = (req, res) => {
     const {server, id} = req.params
 
@@ -204,6 +227,7 @@ module.exports = {
     getDocs,
     getChampions,
     getChampion,
+    getChampionIcon,
     findChampion,
     getSummoner,
     getMasteries,
