@@ -145,7 +145,7 @@ const getSummoner = async (req, res) => {
     // Get Ranked data
     await axios.get(`https://${server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${encriptedId}?api_key=${api}`)
     .then((resp) => {
-        summoner['rank'] = resp.data.length ? resp.data[0] : []
+        summoner['rank'] = resp.data.length ? resp.data[0] : fallbackRank()
         res.status(200).json(summoner)
     })
     .catch((err) => {
@@ -178,6 +178,22 @@ const getMasteries = (req, res) => {
         res.status(400).json(error(400, `Bad Request ${err}`))
     })
 }
+
+const fallbackRank = () => ({
+    "leagueId": "",
+    "queueType": "",
+    "tier": "UNRANKED",
+    "rank": "",
+    "summonerId": "",
+    "summonerName": "",
+    "leaguePoints": 0,
+    "wins": 0,
+    "losses": 0,
+    "veteran": false,
+    "inactive": false,
+    "freshBlood": false,
+    "hotStreak": false
+})
 
 const fallbackMastery = (puuid = "puuid", championId = 0) => ({
     "puuid": puuid,
